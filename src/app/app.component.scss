@@ -1,0 +1,176 @@
+.wrapper {
+  width: 100vw;
+  height: 100vh;
+  background: url("/bg-desktop-light.jpg");
+  // background-size: 100vw 40%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: #fafafa;
+  .menu-container {
+    // width: 38%;
+    max-width: 730px;
+    margin: 0 auto;
+    padding-top: 96px;
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .todo-heading {
+        color: white;
+        letter-spacing: 0.5em;
+        padding-top: 7px;
+        font-size: 2.6em;
+      }
+    }
+    main {
+      margin-top: 56px;
+      label {
+        display: inline-block;
+        width: 26px;
+        height: 26px;
+        border: 1px #b4b6bb solid;
+        border-radius: 50%;
+      }
+      input {
+        flex: 1;
+        font-size: 21px;
+        border: none;
+        outline: none;
+        background: transparent;
+      }
+      form {
+        display: flex;
+        align-items: center;
+        gap: 29px;
+      }
+      .field {
+        width: 100%;
+        padding: 28px 30px;
+        background-color: white;
+        border-radius: 5px;
+      }
+      .tasks-container {
+        margin-top: 38px;
+      }
+      .task-field {
+        display: flex;
+        justify-content: space-between;
+        cursor: pointer;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        border-bottom: 1px solid #d8d6db;
+        &:not(:first-child) {
+          border-radius: 0;
+        }
+        &:hover {
+          label {
+            // transition: all 250ms ease-in-out;
+            border: 1.5px solid transparent;
+            background: linear-gradient(white, white) padding-box,
+              linear-gradient(
+                  90deg,
+                  rgba(120, 193, 246, 1) 0%,
+                  rgba(166, 118, 243, 1) 100%,
+                  rgba(51, 29, 253, 1) 100%
+                )
+                border-box;
+          }
+          .cross {
+            display: inline-block;
+          }
+        }
+        .cross {
+          align-self: center;
+          display: none;
+        }
+      }
+
+      .task-info {
+        label {
+          cursor: pointer;
+          position: relative;
+          user-select: none;
+        }
+        display: flex;
+        gap: 29px;
+        align-items: center;
+        p {
+          font-size: 21px;
+        }
+        .task-select-input {
+          display: none;
+        }
+        .check-icon {
+          display: none;
+          position: absolute;
+          left: 7px;
+          top: 8px;
+        }
+        .task-select-input:checked ~ label {
+          img {
+            display: inline-block;
+          }
+          background: linear-gradient(
+            90deg,
+            rgba(120, 193, 246, 1) 0%,
+            rgba(166, 118, 243, 1) 100%,
+            rgba(51, 29, 253, 1) 100%
+          );
+          border: none;
+        }
+        .task-select-input:checked {
+          & ~ p {
+            color: #d6d5d9;
+            text-decoration: line-through;
+          }
+        }
+      }
+      .actions {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px 30px;
+        background: white;
+        border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+        color: #afafb9;
+        .filters {
+          display: flex;
+          gap: 15px;
+          .active {
+            color: #648fe6;
+            pointer-events: none;
+          }
+        }
+        .filters a:hover {
+          color: #6a6974;
+        }
+        .clear-all {
+          flex-grow: 1;
+          flex-basis: 0;
+          display: flex;
+          justify-content: flex-end;
+        }
+        .items-left {
+          flex-grow: 1;
+          flex-basis: 0;
+        }
+        button {
+          &:hover {
+            color: #6a6974;
+          }
+          background: transparent;
+          border: none;
+          color: inherit;
+          cursor: pointer;
+          font-size: inherit;
+        }
+      }
+      .main-container {
+        box-shadow: 0px 24px 74px -44px rgba(132, 132, 132, 1);
+        border-radius: 5px;
+      }
+    }
+  }
+}
+
+// #648fe6 blue
