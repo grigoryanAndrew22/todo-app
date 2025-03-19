@@ -26,8 +26,8 @@
       margin-top: 56px;
       label {
         display: inline-block;
-        width: 26px;
-        height: 26px;
+        min-width: 26px;
+        min-height: 26px;
         border: 1px #b4b6bb solid;
         border-radius: 50%;
       }
@@ -125,6 +125,29 @@
           }
         }
       }
+      .filters-mobile {
+        box-shadow: -1px 5px 20px 10px rgba(157, 162, 235, 0.3);
+        margin-top: 50px;
+        display: none;
+        .filters {
+          display: flex;
+          justify-content: center;
+          gap: 15px;
+          color: #afafb9;
+          a:hover {
+            color: #6a6974;
+          }
+        }
+      }
+      .drag-n-drop {
+        text-align: center;
+        color: #9b9a9f;
+        margin-top: 50px;
+      }
+      .active {
+        color: #648fe6;
+        pointer-events: none;
+      }
       .actions {
         display: flex;
         justify-content: space-between;
@@ -136,10 +159,6 @@
         .filters {
           display: flex;
           gap: 15px;
-          .active {
-            color: #648fe6;
-            pointer-events: none;
-          }
         }
         .filters a:hover {
           color: #6a6974;
@@ -166,7 +185,7 @@
         }
       }
       .main-container {
-        box-shadow: 0px 24px 74px -44px rgba(132, 132, 132, 1);
+        box-shadow: -1px 5px 20px 10px rgba(157, 162, 235, 0.3);
         border-radius: 5px;
       }
     }
@@ -174,3 +193,46 @@
 }
 
 // #648fe6 blue
+
+@media (max-width: 811px) {
+  .menu-container {
+    width: 90%;
+  }
+}
+
+@media (max-width: 625px) {
+  .filters-mobile {
+    display: block !important;
+  }
+  .actions {
+    .filters {
+      display: none !important;
+    }
+  }
+}
+
+@media (max-width: 670px) {
+  .wrapper {
+    background: url("/bg-mobile-light.jpg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    .menu-container {
+      padding-top: 50px;
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .task-info {
+    p {
+      font-size: 17px !important;
+    }
+  }
+  .field {
+    form {
+      input {
+        font-size: 17px !important;
+      }
+    }
+  }
+}
