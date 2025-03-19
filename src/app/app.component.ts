@@ -7,11 +7,18 @@ import {
 } from '@angular/forms';
 import { TasksService } from './services/tasks.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import {
+  CdkDrag,
+  CdkDragDrop,
+  CdkDropList,
+  moveItemInArray,
+} from '@angular/cdk/drag-drop';
+import { Task } from './interfaces/task.interface';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, CdkDropList, CdkDrag],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
@@ -35,9 +42,13 @@ export class AppComponent {
         return this.tasksService.tasks();
     }
   });
-  // displayedTasks = this.tasksService.displayedTasks;
   filter = signal<'all' | 'active' | 'completed'>('all');
   itemsLeft = this.tasksService.itemsLeft;
+  filterOptions = [
+    ['all', 'All'],
+    ['active', 'Active'],
+    ['completed', 'Completed'],
+  ];
 
   ngOnInit() {
     const querySubscription = this.activatedRoute.queryParams.subscribe({
@@ -69,5 +80,13 @@ export class AppComponent {
 
   onDeleteTask(id: number) {
     this.tasksService.deleteTask(id);
+  }
+
+  drop(event: CdkDragDrop<Task[]>) {
+    moveItemInArray(
+      event.container.data,
+      event.previousIndex,
+      event.currentIndex
+    );
   }
 }

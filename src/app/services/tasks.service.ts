@@ -1,10 +1,11 @@
-import { computed, Injectable, signal } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
+import { Task } from '../interfaces/task.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TasksService {
-  tasks = signal<{ id: number; title: string; completed: boolean }[]>([]);
+  tasks = signal<Task[]>([]);
   itemsLeft = signal<number>(0);
 
   addTask(title: string) {
@@ -22,7 +23,7 @@ export class TasksService {
         found.completed = !found.completed;
       }
       this.itemsLeft.set(prevTasks.filter((task) => !task.completed).length);
-      return prevTasks;
+      return [...prevTasks];
     });
   }
 
@@ -34,7 +35,6 @@ export class TasksService {
 
   deleteTask(taskId: number) {
     this.tasks.update((prevTasks) => {
-      // prevTasks.splice(taskIndex, 1);
       return prevTasks.filter((task) => task.id != taskId);
     });
     this.itemsLeft.set(this.tasks().filter((task) => !task.completed).length);
