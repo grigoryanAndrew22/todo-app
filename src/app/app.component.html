@@ -27,12 +27,12 @@
             <div class="task-info">
               <input
                 type="checkbox"
-                [id]="'task' + i + '_select'"
+                [id]="'task' + task.id + '_select'"
                 class="task-select-input"
-                (change)="onSelectTask(i)"
+                (change)="onSelectTask(task.id)"
                 [checked]="task.completed"
               />
-              <label [for]="'task' + i + '_select'">
+              <label [for]="'task' + task.id + '_select'">
                 <img
                   src="/icon-check.svg"
                   alt=""
@@ -49,7 +49,7 @@
               width="23px"
               height="23px"
               class="cross"
-              (click)="onDeleteTask(i)"
+              (click)="onDeleteTask(task.id)"
             />
           </div>
           }

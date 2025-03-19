@@ -15,9 +15,12 @@ export class TasksService {
     this.itemsLeft.set(this.tasks().filter((task) => !task.completed).length);
   }
 
-  changeCompleted(taskIndex: number) {
+  changeCompleted(taskId: number) {
     this.tasks.update((prevTasks) => {
-      prevTasks[taskIndex].completed = !prevTasks[taskIndex].completed;
+      const found = prevTasks.find((task) => task.id == taskId);
+      if (found) {
+        found.completed = !found.completed;
+      }
       this.itemsLeft.set(prevTasks.filter((task) => !task.completed).length);
       return prevTasks;
     });
@@ -29,10 +32,10 @@ export class TasksService {
     );
   }
 
-  deleteTask(taskIndex: number) {
+  deleteTask(taskId: number) {
     this.tasks.update((prevTasks) => {
-      prevTasks.splice(taskIndex, 1);
-      return prevTasks;
+      // prevTasks.splice(taskIndex, 1);
+      return prevTasks.filter((task) => task.id != taskId);
     });
     this.itemsLeft.set(this.tasks().filter((task) => !task.completed).length);
   }

@@ -35,6 +35,7 @@ export class AppComponent {
         return this.tasksService.tasks();
     }
   });
+  // displayedTasks = this.tasksService.displayedTasks;
   filter = signal<'all' | 'active' | 'completed'>('all');
   itemsLeft = this.tasksService.itemsLeft;
 
@@ -57,8 +58,8 @@ export class AppComponent {
     }
   }
 
-  onSelectTask(index: number) {
-    this.tasksService.changeCompleted(index);
+  onSelectTask(id: number) {
+    this.tasksService.changeCompleted(id);
   }
 
   clearCompleted() {
@@ -66,7 +67,7 @@ export class AppComponent {
     this.tasksService.clearCompleted();
   }
 
-  onDeleteTask(index: number) {
-    this.tasksService.deleteTask(index);
+  onDeleteTask(id: number) {
+    this.tasksService.deleteTask(id);
   }
 }
