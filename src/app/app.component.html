@@ -6,25 +6,33 @@
     </header>
     <main>
       <div class="field">
-        <form>
+        <form [formGroup]="taskForm" (ngSubmit)="onAddTask()">
           <label for="task_name"></label>
           <input
             id="task_name"
             type="text"
             placeholder="Create a new todo..."
+            formControlName="title"
           />
         </form>
       </div>
       <div class="main-container">
         <div class="tasks-container">
+          @if(displayedTasks().length === 0) {
+          <div class="field task-field gray">
+            <p>No tasks in this category.</p>
+          </div>
+          } @for(task of displayedTasks(); track task.id; let i = $index) {
           <div class="field task-field">
             <div class="task-info">
               <input
                 type="checkbox"
-                id="task_select"
+                [id]="'task' + i + '_select'"
                 class="task-select-input"
+                (change)="onSelectTask(i)"
+                [checked]="task.completed"
               />
-              <label for="task_select">
+              <label [for]="'task' + i + '_select'">
                 <img
                   src="/icon-check.svg"
                   alt=""
@@ -33,7 +41,7 @@
                   class="check-icon"
               /></label>
 
-              <p>Complete online JavaScript course</p>
+              <p>{{ task.title }}</p>
             </div>
             <img
               src="/icon-cross.svg"
@@ -41,60 +49,66 @@
               width="23px"
               height="23px"
               class="cross"
+              (click)="onDeleteTask(i)"
             />
           </div>
-
-          <div class="field task-field">
-            <div class="task-info">
-              <input
-                type="checkbox"
-                id="task1_select"
-                class="task-select-input"
-              />
-              <label for="task1_select">
-                <img
-                  src="/icon-check.svg"
-                  alt=""
-                  width="13px"
-                  height="11px"
-                  class="check-icon"
-              /></label>
-
-              <p>Complete online JavaScript course</p>
-            </div>
-            <img
-              src="/icon-cross.svg"
-              alt=""
-              width="23px"
-              height="23px"
-              class="cross"
-            />
-          </div>
+          }
         </div>
         <div class="actions">
           <div class="items-left">
-            <p>5 items left</p>
+            <p>{{ itemsLeft() }} items left</p>
           </div>
 
           <div class="filters">
-            <a href="" class="active">All</a>
-            <a href="">Active</a>
-            <a href="">Completed</a>
+            <a
+              routerLink=""
+              [queryParams]="{ filter: 'all' }"
+              [class.active]="filter() === 'all'"
+              >All</a
+            >
+            <a
+              routerLink=""
+              [queryParams]="{ filter: 'active' }"
+              [class.active]="filter() === 'active'"
+              >Active</a
+            >
+            <a
+              routerLink=""
+              [queryParams]="{ filter: 'completed' }"
+              [class.active]="filter() === 'completed'"
+              >Completed</a
+            >
           </div>
 
           <div class="clear-all">
-            <button>Clear Completed</button>
+            <button (click)="clearCompleted()">Clear Completed</button>
           </div>
         </div>
       </div>
       <div class="filters-mobile field">
         <div class="filters">
-          <a href="" class="active">All</a>
-          <a href="">Active</a>
-          <a href="">Completed</a>
+          <a
+            routerLink=""
+            [queryParams]="{ filter: 'all' }"
+            [class.active]="filter() === 'all'"
+            >All</a
+          >
+          <a
+            routerLink=""
+            [queryParams]="{ filter: 'active' }"
+            [class.active]="filter() === 'active'"
+            >Active</a
+          >
+          <a
+            routerLink=""
+            [queryParams]="{ filter: 'completed' }"
+            [class.active]="filter() === 'completed'"
+            >Completed</a
+          >
         </div>
       </div>
       <p class="drag-n-drop">Drag and drop to reorder list</p>
+      <div class="spacer"></div>
     </main>
   </div>
 </div>
