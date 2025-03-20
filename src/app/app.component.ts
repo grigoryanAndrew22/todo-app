@@ -62,7 +62,6 @@ export class AppComponent {
 
   ngOnInit() {
     this.tasksService.fetchTasks();
-    // console.log(this.wrapperElement()?.nativeElement.classList.add('darkmode'));
 
     const querySubscription = this.activatedRoute.queryParams.subscribe({
       next: (value) => {

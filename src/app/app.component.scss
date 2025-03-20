@@ -221,6 +221,18 @@ $label_gradient: linear-gradient(
   }
 }
 
+.gray {
+  color: #afafb9;
+  pointer-events: none;
+  align-self: center;
+}
+
+.spacer {
+  height: 80px;
+}
+
+////////// MEDIA QUERIES
+
 @media (max-width: 811px) {
   .menu-container {
     width: 90%;
@@ -263,15 +275,7 @@ $label_gradient: linear-gradient(
   }
 }
 
-.gray {
-  color: #afafb9;
-  pointer-events: none;
-  align-self: center;
-}
-
-.spacer {
-  height: 80px;
-}
+//////////// DRAG AND DROP STYLING
 
 input:-webkit-autofill,
 input:-webkit-autofill:focus {
