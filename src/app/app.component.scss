@@ -1,35 +1,79 @@
+$label_hover_gradient: linear-gradient(
+      var(--field-background-color),
+      var(--field-background-color)
+    )
+    padding-box,
+  linear-gradient(
+      to bottom right,
+      var(--color-gradient-start),
+      var(--color-gradient-end)
+    )
+    border-box;
+$label_gradient: linear-gradient(
+  to bottom right,
+  var(--color-gradient-start),
+  var(--color-gradient-end)
+);
+
+.darkmode {
+  --background-color: #181824;
+  --field-background-color: #25273c;
+  --border-bottom-color: hsl(237, 14%, 26%);
+  --text-color: hsl(234, 11%, 52%);
+  --disabled-text: hsl(233, 14%, 35%);
+  --color-gradient-start: hsl(192, 100%, 67%);
+  --color-gradient-end: hsl(280, 87%, 65%);
+  --active-color: hsl(220, 98%, 61%);
+}
+
+@mixin label_style {
+  display: inline-block;
+  min-width: 26px;
+  min-height: 26px;
+  border: 1px #b4b6bb solid;
+  border-radius: 50%;
+}
+
+@mixin background_setting($url) {
+  background: $url;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+@mixin flexbox($justify: initial, $align: initial, $gap: 0px) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+  gap: $gap;
+}
+
 .wrapper {
   width: 100vw;
   height: 100vh;
-  background: url("/bg-desktop-light.jpg");
   // background-size: 100vw 40%;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-color: #fafafa;
+  @include background_setting(url("/bg-desktop-light.jpg"));
+  background-color: var(--background-color);
   .menu-container {
-    // width: 38%;
     max-width: 730px;
     margin: 0 auto;
     padding-top: 96px;
     header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      @include flexbox(space-between, center);
       .todo-heading {
         color: white;
         letter-spacing: 0.5em;
         padding-top: 7px;
         font-size: 2.6em;
       }
+      img {
+        cursor: pointer;
+      }
     }
     main {
+      color: var(--text-color);
       margin-top: 56px;
       label {
-        display: inline-block;
-        min-width: 26px;
-        min-height: 26px;
-        border: 1px #b4b6bb solid;
-        border-radius: 50%;
+        @include label_style;
       }
       input {
         flex: 1;
@@ -37,16 +81,15 @@
         border: none;
         outline: none;
         background: transparent;
+        color: inherit;
       }
       form {
-        display: flex;
-        align-items: center;
-        gap: 29px;
+        @include flexbox($align: center, $gap: 29px);
       }
       .field {
         width: 100%;
         padding: 28px 30px;
-        background-color: white;
+        background-color: var(--field-background-color);
         border-radius: 5px;
       }
       .tasks-container {
@@ -58,22 +101,14 @@
         cursor: pointer;
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
-        border-bottom: 1px solid #d8d6db;
+        border-bottom: 1px solid var(--border-bottom-color);
         &:not(:first-child) {
           border-radius: 0;
         }
         &:hover {
           label {
-            // transition: all 250ms ease-in-out;
             border: 1.5px solid transparent;
-            background: linear-gradient(white, white) padding-box,
-              linear-gradient(
-                  90deg,
-                  rgba(120, 193, 246, 1) 0%,
-                  rgba(166, 118, 243, 1) 100%,
-                  rgba(51, 29, 253, 1) 100%
-                )
-                border-box;
+            background: $label_hover_gradient;
           }
           .cross {
             display: inline-block;
@@ -91,9 +126,7 @@
           position: relative;
           user-select: none;
         }
-        display: flex;
-        gap: 29px;
-        align-items: center;
+        @include flexbox($align: center, $gap: 29px);
         p {
           font-size: 21px;
         }
@@ -110,17 +143,12 @@
           img {
             display: inline-block;
           }
-          background: linear-gradient(
-            90deg,
-            rgba(120, 193, 246, 1) 0%,
-            rgba(166, 118, 243, 1) 100%,
-            rgba(51, 29, 253, 1) 100%
-          );
+          background: $label_gradient;
           border: none;
         }
         .task-select-input:checked {
           & ~ p {
-            color: #d6d5d9;
+            color: var(--disabled-text);
             text-decoration: line-through;
           }
         }
@@ -145,14 +173,14 @@
         margin-top: 50px;
       }
       .active {
-        color: #648fe6;
+        color: var(--active-color);
         pointer-events: none;
       }
       .actions {
         display: flex;
         justify-content: space-between;
         padding: 20px 30px;
-        background: white;
+        // background: white;
         border-bottom-right-radius: 5px;
         border-bottom-left-radius: 5px;
         color: #afafb9;
@@ -187,12 +215,11 @@
       .main-container {
         box-shadow: -1px 5px 20px 10px rgba(157, 162, 235, 0.3);
         border-radius: 5px;
+        background: var(--field-background-color);
       }
     }
   }
 }
-
-// #648fe6 blue
 
 @media (max-width: 811px) {
   .menu-container {
@@ -213,9 +240,8 @@
 
 @media (max-width: 670px) {
   .wrapper {
-    background: url("/bg-mobile-light.jpg");
-    background-size: contain;
-    background-repeat: no-repeat;
+    @include background_setting(url("/bg-mobile-light.jpg"));
+    background-color: var(--background-color);
     .menu-container {
       padding-top: 50px;
     }
@@ -254,7 +280,26 @@ input:-webkit-autofill:focus {
 }
 
 .cdk-drag-preview {
-  background-color: white;
+  color: var(--text-color);
+  .check-icon {
+    position: absolute;
+    left: 7px;
+    top: 8px;
+  }
+  .task-select-input:checked ~ label {
+    img {
+      display: inline-block;
+    }
+    background: $label_gradient;
+    border: none;
+  }
+  .task-select-input:checked {
+    & ~ p {
+      color: #d6d5d9;
+      text-decoration: line-through;
+    }
+  }
+  background: var(--field-background-color);
   border: none;
   box-sizing: border-box;
   border-radius: 5px;
@@ -264,19 +309,14 @@ input:-webkit-autofill:focus {
   justify-content: space-between;
   padding: 28px 30px;
   label {
-    display: inline-block;
-    min-width: 26px;
-    min-height: 26px;
-    border: 1px #b4b6bb solid;
-    border-radius: 50%;
+    @include label_style;
+    position: relative;
   }
   input {
     display: none;
   }
   .task-info {
-    display: flex;
-    gap: 29px;
-    align-items: center;
+    @include flexbox($align: center, $gap: 29px);
     p {
       font-size: 21px;
     }

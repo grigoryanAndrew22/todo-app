@@ -8,12 +8,25 @@ export class TasksService {
   tasks = signal<Task[]>([]);
   itemsLeft = signal<number>(0);
 
+  updateItemsAndLocalTasks() {
+    this.itemsLeft.set(this.tasks().filter((task) => !task.completed).length);
+    window.localStorage.setItem('tasks', JSON.stringify([...this.tasks()]));
+  }
+
+  fetchTasks() {
+    const savedTasks = JSON.parse(window.localStorage.getItem('tasks')!);
+    if (savedTasks) {
+      this.tasks.set(savedTasks);
+    }
+    this.itemsLeft.set(this.tasks().filter((task) => !task.completed).length);
+  }
+
   addTask(title: string) {
     this.tasks.update((prevTasks) => [
       { id: Math.round(Math.random() * 10000), title, completed: false },
       ...prevTasks,
     ]);
-    this.itemsLeft.set(this.tasks().filter((task) => !task.completed).length);
+    this.updateItemsAndLocalTasks();
   }
 
   changeCompleted(taskId: number) {
@@ -22,21 +35,23 @@ export class TasksService {
       if (found) {
         found.completed = !found.completed;
       }
-      this.itemsLeft.set(prevTasks.filter((task) => !task.completed).length);
+
       return [...prevTasks];
     });
+    this.updateItemsAndLocalTasks();
   }
 
   clearCompleted() {
     this.tasks.update((prevTasks) =>
       prevTasks.filter((task) => !task.completed)
     );
+    window.localStorage.setItem('tasks', JSON.stringify([...this.tasks()]));
   }
 
   deleteTask(taskId: number) {
     this.tasks.update((prevTasks) => {
       return prevTasks.filter((task) => task.id != taskId);
     });
-    this.itemsLeft.set(this.tasks().filter((task) => !task.completed).length);
+    this.updateItemsAndLocalTasks();
   }
 }

@@ -1,4 +1,12 @@
-import { Component, computed, DestroyRef, inject, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  DestroyRef,
+  ElementRef,
+  inject,
+  signal,
+  viewChild,
+} from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -27,6 +35,8 @@ export class AppComponent {
   private tasksService = inject(TasksService);
   private activatedRoute = inject(ActivatedRoute);
   private router = inject(Router);
+  theme = signal<'dark' | 'light'>('light');
+  wrapperElement = viewChild<ElementRef<HTMLDivElement>>('wrapper');
   taskForm = new FormGroup({
     title: new FormControl('', { validators: [Validators.required] }),
   });
@@ -51,11 +61,14 @@ export class AppComponent {
   ];
 
   ngOnInit() {
+    this.tasksService.fetchTasks();
+    // console.log(this.wrapperElement()?.nativeElement.classList.add('darkmode'));
+
     const querySubscription = this.activatedRoute.queryParams.subscribe({
       next: (value) => {
-        console.log(value['filter']);
-        this.filter.set(value['filter']);
-        console.log(this.displayedTasks());
+        if (value['filter']) {
+          this.filter.set(value['filter']);
+        }
       },
     });
 
@@ -88,5 +101,15 @@ export class AppComponent {
       event.previousIndex,
       event.currentIndex
     );
+    this.tasksService.updateItemsAndLocalTasks();
+  }
+
+  setDark() {
+    this.theme.set('dark');
+    this.wrapperElement()?.nativeElement.classList.add('darkmode');
+  }
+  setLight() {
+    this.theme.set('light');
+    this.wrapperElement()?.nativeElement.classList.remove('darkmode');
   }
 }

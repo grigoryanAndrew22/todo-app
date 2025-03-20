@@ -1,8 +1,24 @@
-<div class="wrapper">
+<div class="wrapper" #wrapper>
   <div class="menu-container">
     <header>
       <h1 class="todo-heading">TODO</h1>
-      <img src="/icon-moon.svg" alt="" width="32px" height="32px" />
+      @if(theme() === 'light') {
+      <img
+        src="/icon-moon.svg"
+        alt=""
+        width="32px"
+        height="32px"
+        (click)="setDark()"
+      />
+      } @else {
+      <img
+        src="/icon-sun.svg"
+        alt=""
+        width="32px"
+        height="32px"
+        (click)="setLight()"
+      />
+      }
     </header>
     <main>
       <div class="field">
